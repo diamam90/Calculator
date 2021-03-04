@@ -1,33 +1,58 @@
 package calculatorModel;
 import java.util.Scanner;
 public class InteractRunner {
-	private int a,b;
+	private int number1,number2;
 	private Calculator calc;
-	private int start, end;
+	private boolean start=true;
+	private boolean resultIsEmpty=true;
+	InteractRunner(Calculator calc){this.calc=calc;}
 	public static void main(String[] args) {
 		
 		
-		InteractRunner ir = new InteractRunner();
-		ir.calc = new Calculator();
-		Scanner scan = new Scanner(System.in);
-		int operation = ir.inputOperation(scan);
-		if (operation>=1 && operation<=4) {
-			int number1 = ir.inputNumber(scan);
-			int number2 = ir.inputNumber(scan);
-			ir.calcMethod(operation, number1,number2);
-		}
-		else if (operation==5){
-			int number1=(int) ir.calc.getResult();
-			int number2 = ir.inputNumber(scan);
-			int operationId=ir.inputOperation(scan);
-			ir.calcMethod(operationId, number1, number2);
-		}
+		InteractRunner ir = new InteractRunner(new Calculator());
+		ir.CalculatorAtWork();
+		
 			
 	}
 
+	public void CalculatorAtWork() {
+		int i=0;
+		Scanner scan = new Scanner(System.in);
+		while (isStart()) {
+			int operation = inputOperation(scan);
+			if (operation>=1 && operation<=4) {
+				setNumber1(inputNumber(scan)); 
+				setNumber2(inputNumber(scan)); 
+				calcMethod(operation,calc);
+			}
+			else if (operation==5 && i==0){
+				System.out.println(i);
+				int operationId=inputOperation(scan);
+				setNumber1((int) calc.getResult());
+				setNumber2(inputNumber(scan));
+				calcMethod(operationId,calc);
+				System.out.println("1.(+) 2.(-) 3.(x) 4.(/) 6.ÐžÐ±Ð½ÑƒÐ»Ð¸Ñ‚ÑŒ 7.Ð’Ñ‹Ñ…Ð¾Ð´ Ð¸Ð· ÐºÐ°Ð»ÑŒÐºÑƒÐ»ÑÑ‚Ð¾Ñ€Ð°");
+				i=1;
+			
+			}
+			else if (operation==7) {
+				start=false;
+			}
+		}
+	}
 	
 	
-	public void calcMethod(int operationId,int number1,int number2) {
+	public boolean isStart() {return start;	}
+	public void setStart(boolean start) {this.start = start;}
+
+	public int getNumber1() {return number1;}
+	public void setNumber1(int number1) {this.number1 = number1;}
+	public int getNumber2() {return number2;}
+	public void setNumber2(int number2) {this.number2 = number2;}
+
+
+
+	public void calcMethod(int operationId,Calculator calc) {
 		
 		switch (operationId) {
 		case 1: 
@@ -45,33 +70,37 @@ public class InteractRunner {
 	}
 	
 	public int inputOperation(Scanner scan) {
-		System.out.println("Âûáåðèòå îïåðàöèþ êàëüêóëÿòîðà");
-		System.out.println("1 - Ñëîæåíèå \n2 - Âû÷èòàíèå \n3 - Óìíîæåíèå \n4 - Äåëåíèå \n5 - Ïðîèçâåñòè îïåðàöèþ ñ ïîëó÷åííûì ðåçóëüòàòîì \n6 - Î÷èñòèòü \n7 - Âûéòè èç êàëüêóëÿòîðà");
+		System.out.println("Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ");
 		int choice=0;
-		while (scan.hasNext()) {
-			if (scan.hasNextInt()) {
-				choice=scan.nextInt();
-				if (choice>=1 && choice<=7) {
-					break;
+		System.out.println("1.(+) 2.(-) 3.(x) 4.(/) \n5.ÐžÐ¿ÐµÑ€Ð°Ñ†Ð¸Ñ Ñ Ð¿Ñ€ÐµÐ´Ñ‹Ð´ÑƒÑ‰Ð¸Ð¼ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚Ð¾Ð¼ \n6.ÐžÐ±Ð½ÑƒÐ»Ð¸Ñ‚ÑŒ \n7.Ð’Ñ‹Ñ…Ð¾Ð´ Ð¸Ð· ÐºÐ°Ð»ÑŒÐºÑƒÐ»ÑÑ‚Ð¾Ñ€Ð°");
+			while (scan.hasNext()) {
+				if (scan.hasNextInt()) {
+					choice=scan.nextInt();
+					if (choice>=1 && choice<=7) {
+						break;
+					}
 				}
+				else System.out.println("Ð’Ð²ÐµÐ´ÐµÐ½Ð¾ Ð½ÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ");
+			scan.nextLine();	
 			}
-		scan.nextLine();	
-		}
+		
 		
 		switch (choice) {
-		case 1: System.out.println("Îïåðàöèÿ ñëîæåíèå");
+		case 1: System.out.println("ÐžÐ¿ÐµÑ€Ð°Ñ†Ð¸Ñ ÑÐ»Ð¾Ð¶ÐµÐ½Ð¸Ðµ");
 			break;
-		case 2: System.out.println("Îïåðàöèÿ âû÷èòàíèå");
+		case 2: System.out.println("ÐžÐ¿ÐµÑ€Ð°Ñ†Ð¸Ñ Ð²Ñ‹Ñ‡Ð¸Ñ‚Ð°Ð½Ð¸Ðµ");
 		break;
-		case 3: System.out.println("Îïåðàöèÿ óìíîæåíèå");
+		case 3: System.out.println("ÐžÐ¿ÐµÑ€Ð°Ñ†Ð¸Ñ ÑƒÐ¼Ð½Ð¾Ð¶ÐµÐ½Ð¸Ðµ");
 		break;
-		case 4: System.out.println("Îïåðàöèÿ äåëåíèå");
+		case 4: System.out.println("ÐžÐ¿ÐµÑ€Ð°Ñ†Ð¸Ñ Ð´ÐµÐ»ÐµÐ½Ð¸Ðµ");
 		break;
-		case 5: System.out.println("Îïåðàöèÿ ñ ïðåäûäóùèì ðåçóëüòàòîì");
+		case 5: System.out.println("ÐŸÑ€ÐµÐ´Ñ‹Ð´ÑƒÑ‰Ð¸Ð¹ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚:" + calc.getResult());
+			resultIsEmpty=false;
 		break;
-		case 6: System.out.println("Îáíóëåíèå");
+		case 6: System.out.println("ÐžÐ±Ð½ÑƒÐ»ÐµÐ½Ð¸Ðµ");
+				calc.clearResult();
 		break;
-		case 7: System.out.println("Âûêëþ÷åíèå êàëüêóëÿòîðà");
+		case 7: System.out.println("Ð’Ñ‹Ñ…Ð¾Ð´ Ð¸Ð· ÐºÐ°Ð»ÑŒÐºÑƒÐ»ÑÑ‚Ð¾Ñ€Ð°");
 		break;
 			
 		}
@@ -80,7 +109,7 @@ public class InteractRunner {
 	}
 		
 	public int inputNumber(Scanner scan) {
-		System.out.println("Ââåäèòå öåëîå ÷èñëî");
+		System.out.println("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ†ÐµÐ»Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾");
 		int number=0;
 		while (scan.hasNext()) {
 			if (scan.hasNextInt()) {
@@ -89,7 +118,7 @@ public class InteractRunner {
 			}
 		scan.nextLine();
 		}
-		System.out.println("Ââåäåííîå ÷èñëî: " + number);
+		System.out.println("Ð’Ð²ÐµÐ´ÐµÐ½Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾: " + number);
 		return number;
 	}
 	
