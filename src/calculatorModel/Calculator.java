@@ -17,7 +17,7 @@ public class Calculator<T extends Number> {
 
 	public double division(int a, int b) {
 		if (b != 0) {
-			result = a / b;
+			result = (double)a / b;
 			System.out.println("Результат деления чисел "+a+" и "+b+ " : "+result);
 			return result;
 		} else {

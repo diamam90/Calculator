@@ -2,24 +2,32 @@ package calculatorModel;
 import java.util.Scanner;
 public class InteractRunner {
 	private int a,b;
+	private Calculator calc;
 	private int start, end;
 	public static void main(String[] args) {
 		
 		
 		InteractRunner ir = new InteractRunner();
+		ir.calc = new Calculator();
 		Scanner scan = new Scanner(System.in);
 		int operation = ir.inputOperation(scan);
-		
-		Calculator calc1 = new Calculator();
-		
-		int number1 = ir.inputNumber(scan);
-		int number2 = ir.inputNumber(scan);
-		ir.calcMethod(operation, calc1, number1,number2);
+		if (operation>=1 && operation<=4) {
+			int number1 = ir.inputNumber(scan);
+			int number2 = ir.inputNumber(scan);
+			ir.calcMethod(operation, number1,number2);
+		}
+		else if (operation==5){
+			int number1=(int) ir.calc.getResult();
+			int number2 = ir.inputNumber(scan);
+			int operationId=ir.inputOperation(scan);
+			ir.calcMethod(operationId, number1, number2);
+		}
+			
 	}
 
 	
 	
-	public void calcMethod(int operationId,Calculator calc,int number1,int number2) {
+	public void calcMethod(int operationId,int number1,int number2) {
 		
 		switch (operationId) {
 		case 1: 
@@ -49,7 +57,25 @@ public class InteractRunner {
 			}
 		scan.nextLine();	
 		}
-		System.out.println("Вы выбрали: " +choice);
+		
+		switch (choice) {
+		case 1: System.out.println("Операция сложение");
+			break;
+		case 2: System.out.println("Операция вычитание");
+		break;
+		case 3: System.out.println("Операция умножение");
+		break;
+		case 4: System.out.println("Операция деление");
+		break;
+		case 5: System.out.println("Операция с предыдущим результатом");
+		break;
+		case 6: System.out.println("Обнуление");
+		break;
+		case 7: System.out.println("Выключение калькулятора");
+		break;
+			
+		}
+		
 		return choice;
 	}
 		
