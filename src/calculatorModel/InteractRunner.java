@@ -16,7 +16,6 @@ public class InteractRunner {
 	}
 
 	public void CalculatorAtWork() {
-		int i=0;
 		Scanner scan = new Scanner(System.in);
 		while (isStart()) {
 			int operation = inputOperation(scan);
@@ -25,17 +24,19 @@ public class InteractRunner {
 				setNumber2(inputNumber(scan)); 
 				calcMethod(operation,calc);
 			}
-			else if (operation==5 && i==0){
-				System.out.println(i);
+			if (operation==5 ){
+				System.out.println("Operation = 5");
+				resultIsEmpty=false;
+				System.out.println(resultIsEmpty);
 				int operationId=inputOperation(scan);
 				setNumber1((int) calc.getResult());
 				setNumber2(inputNumber(scan));
 				calcMethod(operationId,calc);
-				System.out.println("1.(+) 2.(-) 3.(x) 4.(/) 6.Обнулить 7.Выход из калькулятора");
-				i=1;
+				
+				
 			
 			}
-			else if (operation==7) {
+			if (operation==7) {
 				start=false;
 			}
 		}
@@ -72,7 +73,8 @@ public class InteractRunner {
 	public int inputOperation(Scanner scan) {
 		System.out.println("Выберите операцию");
 		int choice=0;
-		System.out.println("1.(+) 2.(-) 3.(x) 4.(/) \n5.Операция с предыдущим результатом \n6.Обнулить \n7.Выход из калькулятора");
+		if (resultIsEmpty) {System.out.println("1.(+) 2.(-) 3.(x) 4.(/) \n5.Операция с предыдущим результатом \n6.Обнулить \n7.Выход из калькулятора");}
+		if (!resultIsEmpty) {System.out.println("1.(+) 2.(-) 3.(x) 4.(/) \n6.Обнулить \n7.Выход из калькулятора");}
 			while (scan.hasNext()) {
 				if (scan.hasNextInt()) {
 					choice=scan.nextInt();
