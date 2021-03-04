@@ -7,12 +7,10 @@ public class InteractRunner {
 	private boolean resultIsEmpty=true;
 	InteractRunner(Calculator calc){this.calc=calc;}
 	public static void main(String[] args) {
-		
-		
+				
 		InteractRunner ir = new InteractRunner(new Calculator());
 		ir.CalculatorAtWork();
-		
-			
+					
 	}
 
 	public void CalculatorAtWork() {
@@ -32,8 +30,6 @@ public class InteractRunner {
 				setNumber1((int) calc.getResult());
 				setNumber2(inputNumber(scan));
 				calcMethod(operationId,calc);
-				
-				
 			
 			}
 			if (operation==7) {
@@ -109,7 +105,7 @@ public class InteractRunner {
 		
 		return choice;
 	}
-		
+	
 	public int inputNumber(Scanner scan) {
 		System.out.println("Введите целое число");
 		int number=0;
