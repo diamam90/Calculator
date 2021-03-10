@@ -10,16 +10,16 @@ public class InteractRunner {
 
 	InteractRunner(Calculator calc){this.calc=calc;}
 	public static void main(String[] args) {
-				
 		InteractRunner ir = new InteractRunner(new Calculator());
+		ir.setUi(new ConsoleUI());
 		ir.CalculatorAtWork();
-					
+
 	}
 
 	public void CalculatorAtWork() {
 		Scanner scan = new Scanner(System.in);
 		while (isStart()) {
-			int operation = inputOperation(scan);
+			int operation = inputOperation();
 			if (operation==5 && hasResult) {
 				if (!chosenPrevOp) {
 					chosenPrevOp = true;
@@ -77,6 +77,14 @@ public class InteractRunner {
 	public int getNumber2() {return number2;}
 	public void setNumber2(int number2) {this.number2 = number2;}
 
+	public UI getUi() {
+		return ui;
+	}
+
+	public void setUi(UI ui) {
+		this.ui = ui;
+	}
+
 	public void calcMethod(int operationId) {
 		
 		switch (operationId) {
@@ -94,18 +102,19 @@ public class InteractRunner {
 			break;}
 	}
 	
-	public int inputOperation(Scanner scan) {
+	public int inputOperation() {
+//		UI ui = new ConsoleUI()
+		boolean check=false;
 		System.out.println("-----------------");
 		System.out.println("Выберите операцию");
 		System.out.println("-----------------");
-		int choice=0;
 		if (hasResult && !chosenPrevOp) {System.out.println("1.Сложение \n2.Вычитание \n3.Умножение \n4.Деление \n5.Операция с предыдущим результатом \n6.Обнулить \n7.Выход из калькулятора");}
 		if (!hasResult | chosenPrevOp) {System.out.println("1.Сложение \n2.Вычитание \n3.Умножение \n4.Деление \n6.Обнулить \n7.Выход из калькулятора");}
-			while (scan.hasNext()) {
-				if (scan.hasNextInt()) {
-					choice=scan.nextInt();
-					if (choice>=1 && choice<=7) {
-						switch (choice){
+		int number=0;
+		while (!check) {
+			number=ui.read();
+			if (number>=1 && number<=7){
+					switch (number){
 							case 1: System.out.println("Вы выбрали операцию сложение");
 							break;
 							case 2: System.out.println("Вы выбрали операцию вычитание");
@@ -123,14 +132,11 @@ public class InteractRunner {
 
 						}
 						break;
-					}
-					else System.out.println("Выберите одну из операций");
-					continue;
-				}
-				else System.out.println("Введено некорректное значение");
-			scan.nextLine();	
 			}
-		return choice;
+			else System.out.println("Введено некорректное значение");
+
+			}
+		return number;
 	}
 	
 	public int inputNumber(Scanner scan) {
