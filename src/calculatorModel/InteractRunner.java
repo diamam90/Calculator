@@ -8,16 +8,11 @@ public class InteractRunner {
 	private boolean chosenPrevOp =false;
 	private UI ui;
 
-	InteractRunner(Calculator calc){this.calc=calc;}
-	public static void main(String[] args) {
-		InteractRunner ir = new InteractRunner(new Calculator());
-		ir.setUi(new ConsoleUI());
-		ir.CalculatorAtWork();
-
-	}
+	public InteractRunner(Calculator calc, UI ui){
+		this.calc=calc;
+		this.ui=ui;}
 
 	public void CalculatorAtWork() {
-		Scanner scan = new Scanner(System.in);
 		while (isStart()) {
 			int operation = inputOperation();
 			if (operation==5 && hasResult) {
@@ -43,9 +38,9 @@ public class InteractRunner {
 			}
 			if ((operation>=1 && operation <=4) && (!chosenPrevOp | !hasResult) ){
 				System.out.println("Введите первое число:");
-				number1=inputNumber(scan);
+				number1=ui.read();
 				System.out.println("Введите второе число:");
-				number2=inputNumber(scan);
+				number2=ui.read();
 				calcMethod(operation);
 				hasResult =true;
 				continue;
@@ -55,7 +50,7 @@ public class InteractRunner {
 				System.out.println("первое число:" +calc.getResult());
 				number1=(int)calc.getResult();
 				System.out.println("Введите второе число:");
-				number2=inputNumber(scan);
+				number2=ui.read();;
 				calcMethod(operation);
 				hasResult =true;
 				chosenPrevOp=false;
@@ -103,7 +98,6 @@ public class InteractRunner {
 	}
 	
 	public int inputOperation() {
-//		UI ui = new ConsoleUI()
 		boolean check=false;
 		System.out.println("-----------------");
 		System.out.println("Выберите операцию");
@@ -138,22 +132,6 @@ public class InteractRunner {
 			}
 		return number;
 	}
-	
-	public int inputNumber(Scanner scan) {
-		int number=0;
-		while (scan.hasNext()) {
-			if (scan.hasNextInt()) {
-				number=scan.nextInt();
-				break;
-			}
-			else System.out.println("Введено некорректное значение");
-		scan.nextLine();
-		}
-		System.out.println("Введенное число: " + number);
-		return number;
-	}
-	
-
-	}
+}
 	
 
